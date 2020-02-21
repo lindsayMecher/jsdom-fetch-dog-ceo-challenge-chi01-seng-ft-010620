@@ -3,7 +3,11 @@
 const dogContainer = document.getElementById("dog-image-container")
 const breedContainer = document.getElementById("dog-breeds")
 const breedDropdown = document.getElementById("breed-dropdown")
-
+let letterArray = ['a', 'b', 'c', 'd']
+let dogData
+let dogBreeds
+let dogBreedsArray
+// let dogDataBreeds = dogData['message']
 // defined functions
 
 function fetchDogs() {
@@ -15,9 +19,63 @@ function fetchDogs() {
 function fetchBreeds() {
   fetch('https://dog.ceo/api/breeds/list/all')
     .then( response => response.json() )
-    .then( dogBreedData => renderDogBreed(dogBreedData.message) );
-
+    .then( dogBreedData => {
+      renderDogBreed(dogBreedData.message)
+      dogData = dogBreedData;
+      dogBreeds = dogData['message']
+      dogBreedsArray = Object.keys(dogBreeds)
+        } );
 }
+
+// const result = words.filter(word => word.length > 6);
+function filterABreeds(dogBreedsArray) {
+  const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'a');
+    while (breedContainer.lastChild) {
+    breedContainer.lastChild.remove()
+  };
+  filteredArray.forEach( breed => {
+    const li = document.createElement('li')
+    li.innerText = breed
+    breedContainer.appendChild(li)
+  })
+}
+
+function filterBBreeds(dogBreedsArray) {
+  const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'b');
+    while (breedContainer.lastChild) {
+    breedContainer.lastChild.remove()
+  };
+  filteredArray.forEach( breed => {
+    const li = document.createElement('li')
+    li.innerText = breed
+    breedContainer.appendChild(li)
+  })
+}
+
+function filterCBreeds(dogBreedsArray) {
+  const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'c');
+    while (breedContainer.lastChild) {
+    breedContainer.lastChild.remove()
+  };
+  filteredArray.forEach( breed => {
+    const li = document.createElement('li')
+    li.innerText = breed
+    breedContainer.appendChild(li)
+  })
+}
+
+function filterDBreeds(dogBreedsArray) {
+  const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'd');
+    while (breedContainer.lastChild) {
+    breedContainer.lastChild.remove()
+  };
+  filteredArray.forEach( breed => {
+    const li = document.createElement('li')
+    li.innerText = breed
+    breedContainer.appendChild(li)
+  })
+}
+
 
 // function fetchABreeds(dogBreedData) {
 //   for (let dogBreed in dogBreedData) {
@@ -34,6 +92,7 @@ function renderDogBreed(dogBreedData) {
     breedContainer.appendChild(li)
   }
 }
+
 
 function renderDog(dogImageData) {
   dogImageData.forEach( dog => {
@@ -54,13 +113,13 @@ function handleBreedClick(event) {
 
 function handleBreedDropdown(event) {
   if (event.target.value === 'a') {
-    console.log('a')
+    filterABreeds(dogBreedsArray)
   } else if (event.target.value === 'b') {
-    console.log('b')
+    filterBBreeds(dogBreedsArray)
   } else if (event.target.value === 'c') {
-    console.log('c')
+    filterCBreeds(dogBreedsArray)
   } else {
-    console.log('d')
+    filterDBreeds(dogBreedsArray)
   }
 }
 
