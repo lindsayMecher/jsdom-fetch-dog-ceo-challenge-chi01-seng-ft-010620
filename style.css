@@ -1,0 +1,27 @@
+body {
+  background-color: pink;
+  font-family: verdana;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+h1 {
+  font-family: verdana;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: center;
+}
+
+img {
+  height: 400px;
+  width: 400px;
+  align-content: center;
+}
+
+div {
+  align-content: center;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 200px;
+  margin-bottom: 200px;
+}

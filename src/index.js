@@ -3,11 +3,16 @@
 const dogContainer = document.getElementById("dog-image-container")
 const breedContainer = document.getElementById("dog-breeds")
 const breedDropdown = document.getElementById("breed-dropdown")
-let letterArray = ['a', 'b', 'c', 'd']
+const option = document.createElement('option')
+breedDropdown.appendChild(option)
+option.innerHTML = '<option value="all">all dogs</option>'
+
+// declared variables for hoisting
 let dogData
 let dogBreeds
 let dogBreedsArray
 // let dogDataBreeds = dogData['message']
+
 // defined functions
 
 function fetchDogs() {
@@ -20,19 +25,15 @@ function fetchBreeds() {
   fetch('https://dog.ceo/api/breeds/list/all')
     .then( response => response.json() )
     .then( dogBreedData => {
-      renderDogBreed(dogBreedData.message)
-      dogData = dogBreedData;
-      dogBreeds = dogData['message']
+      dogBreeds = dogBreedData['message']
       dogBreedsArray = Object.keys(dogBreeds)
+      renderDogBreed(dogBreedData.message)
         } );
 }
 
-// const result = words.filter(word => word.length > 6);
 function filterABreeds(dogBreedsArray) {
   const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'a');
-    while (breedContainer.lastChild) {
-    breedContainer.lastChild.remove()
-  };
+    clearContainer()
   filteredArray.forEach( breed => {
     const li = document.createElement('li')
     li.innerText = breed
@@ -42,9 +43,7 @@ function filterABreeds(dogBreedsArray) {
 
 function filterBBreeds(dogBreedsArray) {
   const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'b');
-    while (breedContainer.lastChild) {
-    breedContainer.lastChild.remove()
-  };
+    clearContainer()
   filteredArray.forEach( breed => {
     const li = document.createElement('li')
     li.innerText = breed
@@ -54,9 +53,7 @@ function filterBBreeds(dogBreedsArray) {
 
 function filterCBreeds(dogBreedsArray) {
   const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'c');
-    while (breedContainer.lastChild) {
-    breedContainer.lastChild.remove()
-  };
+    clearContainer()
   filteredArray.forEach( breed => {
     const li = document.createElement('li')
     li.innerText = breed
@@ -66,9 +63,7 @@ function filterCBreeds(dogBreedsArray) {
 
 function filterDBreeds(dogBreedsArray) {
   const filteredArray = dogBreedsArray.filter( breed => breed[0] === 'd');
-    while (breedContainer.lastChild) {
-    breedContainer.lastChild.remove()
-  };
+    clearContainer()
   filteredArray.forEach( breed => {
     const li = document.createElement('li')
     li.innerText = breed
@@ -76,21 +71,18 @@ function filterDBreeds(dogBreedsArray) {
   })
 }
 
-
-// function fetchABreeds(dogBreedData) {
-//   for (let dogBreed in dogBreedData) {
-//     console.log(dogBreed)
-//   }
-//
-// }
-
-
 function renderDogBreed(dogBreedData) {
-  for (let dogBreed in dogBreedData) {
+  clearContainer()
+  dogBreedsArray.sort().forEach( breed => {
     const li = document.createElement('li')
-    li.innerText = dogBreed;
+    li.innerText = breed;
     breedContainer.appendChild(li)
-  }
+  })
+  // for (let dogBreed in dogBreedData) {
+  //   const li = document.createElement('li')
+  //   li.innerText = dogBreed;
+  //   breedContainer.appendChild(li)
+  // }
 }
 
 
@@ -102,10 +94,16 @@ function renderDog(dogImageData) {
   })
 }
 
+function clearContainer(dogContainer) {
+  while (breedContainer.lastChild) {
+  breedContainer.lastChild.remove()
+  };
+}
+
 function handleBreedClick(event) {
   if (event.target.tagName === "LI") {
       if (event.target.style.color === 'blue') {
-        event.target.style.color = 'pink'
+        event.target.style.color = 'white'
       } else
         event.target.style.color = 'blue'
   }
@@ -118,8 +116,10 @@ function handleBreedDropdown(event) {
     filterBBreeds(dogBreedsArray)
   } else if (event.target.value === 'c') {
     filterCBreeds(dogBreedsArray)
-  } else {
+  } else if (event.target.value === 'd') {
     filterDBreeds(dogBreedsArray)
+  } else {
+    renderDogBreed(dogBreeds)
   }
 }
 
@@ -127,7 +127,6 @@ function handleBreedDropdown(event) {
 
 breedContainer.addEventListener('click', handleBreedClick)
 breedDropdown.addEventListener('change', handleBreedDropdown)
-
 
 
 // invoked functions
