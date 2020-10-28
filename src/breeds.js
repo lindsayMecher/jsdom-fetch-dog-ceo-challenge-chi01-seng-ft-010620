@@ -3,7 +3,6 @@ const breedsList = document.getElementById("dog-breeds");
 const breedDropdown = document.getElementById("breed-dropdown");
 const alphabetArray = ("abcdefghijklmnopqrstuvwxyz").split("");
 let breedData;
-let breedArray = [];
 
 const assembleLetterOptions = () => {
     alphabetArray.forEach(letter => {
@@ -12,33 +11,14 @@ const assembleLetterOptions = () => {
     })
 }
 
-// const renderBreeds = breedObject => {
-//     breedsList.innerHTML = ``;
-//     for (const breed in breedObject) {
-//         breedsList.innerHTML += `<li class="breed-name">${breed}</li>`;
-//         if (breedObject[breed].length > 0) {
-//             breedObject[breed].forEach(subBreed => {
-//                 let string = `<ul><li class="sub-breed-name">${subBreed}</li></ul>`;
-//                 breedsList.lastChild.innerHTML += string;
-//             })
-//         }
-//     }
-// }
-
-const renderBreeds = breedArray => {
+const renderBreeds = breedObject => {
     breedsList.innerHTML = ``;
-    breedArray.forEach(breed => {
+    for (const breed in breedObject) {
         breedsList.innerHTML += `<li class="breed-name">${breed}</li>`;
-    })
-}
-
-const assembleBreedArray = (breedData) => {
-    for (breed in breedData){
-        if (breedData[breed].length === 0) {
-            breedArray.push(breed)
-        } else {
-            breedData[breed].forEach(subBreed => {
-                breedArray.push(subBreed + ' ' + breed);
+        if (breedObject[breed].length > 0) {
+            breedObject[breed].forEach(subBreed => {
+                let string = `<ul><li class="sub-breed-name">${subBreed}</li></ul>`;
+                breedsList.lastChild.innerHTML += string;
             })
         }
     }
@@ -49,8 +29,7 @@ const fetchBreeds = () => {
         .then(resp => resp.json())
         .then(data => {
             breedData = data["message"];
-            assembleBreedArray(breedData);
-            renderBreeds(breedArray);
+            renderBreeds(breedData);
         })
 }
 
@@ -59,27 +38,17 @@ const changeBreedTextColor = (e) => {
     e.target.style.color = `#${randomColor}`;
 }
 
-// const filterBreed = e => {
-//     let letter = e.target.value;
-//     let newObj = {};
-//     for (breed in breedData) {
-//         if (breed[0] === letter) {
-//             newObj[breed] = breedData[breed];
-//         }
-//     }
-//     renderBreeds(newObj);
-// }
-
-filterBreed = e => {
+const filterBreed = e => {
     let letter = e.target.value;
-    let filteredArray = [];
-    breedArray.forEach(breed => {
+    let newObj = {};
+    for (breed in breedData) {
         if (breed[0] === letter) {
-            filteredArray.push(breed);
+            newObj[breed] = breedData[breed];
         }
-    })
-    renderBreeds(filteredArray);
+    }
+    renderBreeds(newObj);
 }
+
 
 
 assembleLetterOptions();
