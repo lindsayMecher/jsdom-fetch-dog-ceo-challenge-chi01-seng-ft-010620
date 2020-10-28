@@ -3,9 +3,9 @@
 // using the alphabet array defined in the declaredVariables file
 // go over each letter in the alphabet and create and option
 // add each of those options to the select dropdown
-const assembleLetterOptions = () => {
+function assembleLetterOptions(){
     // iterate over each element in the alphabet array
-    alphabetArray.forEach(letter => {
+    alphabetArray.forEach(function (letter) {
         //create a variable with the option tag with the value of the current letter
         // the text rendered in the option tag is the letter itself
         let option = `<option value="${letter}">${letter}</option>`;
@@ -17,11 +17,11 @@ const assembleLetterOptions = () => {
 
 // this function is for accepting an array of breeds
 // then rendering them to the DOM
-const renderBreeds = breedArray => {
+function renderBreeds(breedArray) {
     // reset the innerHTML of the breedsList to an empty string
     breedsList.innerHTML = ``;
     // iterate through the array of breeds
-    breedArray.forEach(breed => {
+    breedArray.forEach(function (breed){
         // for each breed, update the innerHTML of breeds list
         // make an LI tag for each breed and give it a class name of "breed-name"
         breedsList.innerHTML += `<li class="breed-name">${breed}</li>`;
@@ -30,7 +30,7 @@ const renderBreeds = breedArray => {
 
 // this function takes in the object of breeds from the fetch request
 // then it converts it into an array
-const assembleBreedArray = (breedData) => {
+function assembleBreedArray(breedData) {
     // for each key in the breedData Object
     // create a variable for each key named breed
     for (breed in breedData){
@@ -41,7 +41,7 @@ const assembleBreedArray = (breedData) => {
             // if the breed does contain subbreeds
         } else {
             // for each breed in the subbreed array
-            breedData[breed].forEach(subBreed => {
+            breedData[breed].forEach(function(subBreed) {
                 // make a string concatenating the subbreed's name with the breeds name
                 // then push that string into the breedArray
                 breedArray.push(subBreed + ' ' + breed);
@@ -51,7 +51,7 @@ const assembleBreedArray = (breedData) => {
 }
 
 // this function retrieves some data from an external source
-const fetchBreeds = () => {
+function fetchBreeds() {
     // make a get request to the breedUrl
     fetch(breedUrl)
         // then we receive a promise from this server
@@ -69,7 +69,7 @@ const fetchBreeds = () => {
 }
 
 // a function for changing the color of the item that was clicked
-const changeBreedTextColor = (e) => {
+function changeBreedTextColor(e) {
     // create a random hex color
     let randomColor = Math.floor(Math.random()*16777215).toString(16);
     // set the style.color of the event's target(clicked item)
@@ -79,13 +79,13 @@ const changeBreedTextColor = (e) => {
 
 
 // a function for filtering the breeds by selected letter
-filterBreed = e => {
+function filterBreed(e) {
     // save the target value to a variable
     let letter = e.target.value;
     // create an empty array
     let filteredArray = [];
     // for each breed in the breed array
-    breedArray.forEach(breed => {
+    breedArray.forEach(function(breed) {
         // if the breed's first letter is the same as the letter selected
         if (breed[0] === letter) {
             // push this breed into the empty array
@@ -105,7 +105,7 @@ fetchBreeds();
 // EVENT LISTENERS
 
 // listen for a click event on the entire document
-document.addEventListener("click", (e) => {
+document.addEventListener("click", function(e) {
     // if the node that was clicked has a class name of "breed-name" or "sub-breed-name"
     if (e.target.className === "breed-name" || e.target.className === "sub-breed-name") {
         // run this function passing the event itself as an argument
