@@ -79,7 +79,7 @@ const changeBreedTextColor = (e) => {
 
 
 // a function for filtering the breeds by selected letter
-filterBreed = e => {
+const filterBreed = e => {
     // save the target value to a variable
     let letter = e.target.value;
     // create an empty array
